@@ -1,0 +1,11 @@
+include dataiku_filter_listener/dataiku_filter_listener.min.js
+include dataiku_filter_listener/dataiku_filter_listener.min.js.map
+include dataiku_filter_listener/async-*.js
+include dataiku_filter_listener/async-*.js.map
+include dataiku_filter_listener/*-shared.js
+include dataiku_filter_listener/*-shared.js.map
+include dataiku_filter_listener/metadata.json
+include dataiku_filter_listener/package-info.json
+include README.md
+include LICENSE
+include package.json

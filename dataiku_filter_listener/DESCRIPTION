@@ -1,0 +1,13 @@
+Package: dataikuFilterListener
+Title: Listen for events triggered by Dataiku Dashboard Filters and get filter values
+Version: 0.0.1
+Description: Listen for events triggered by Dataiku Dashboard Filters and get filter values
+Depends: R (>= 3.0.2)
+Imports: 
+Suggests: 
+License: Apache-2.0 + file LICENSE
+URL: https://github.com/dataiku/dataiku-filter-listener
+BugReports: https://github.com/dataiku/dataiku-filter-listener/issues
+Encoding: UTF-8
+LazyData: true
+KeepSource: true
