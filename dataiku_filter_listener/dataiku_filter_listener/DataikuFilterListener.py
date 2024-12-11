@@ -24,7 +24,7 @@ Keyword arguments:
 - event (dict; optional):
     The latest event fired.
 
-- events (list of dicts; default [{"event": "message", "props": ["k"]}]):
+- events (list of dicts; default [{"event": "message", "props": ["data"]}]):
     The event entry specifies which event to listen to, e.g. \"click\"
     for click events. The \"props\" entry specifies      what event
     properties to record, e.g. [\"x\", \"y\"] to get the cursor

@@ -31,12 +31,12 @@ export default class DataikuFilterListener extends Component {
 
     componentDidMount() {
         const events = this.props.events.map(o => o["event"]);
-        this.getSources().forEach(s => events.forEach(e => s.addDataikuFilterListener(e, this.eventHandler, this.props.useCapture)));
+        this.getSources().forEach(s => events.forEach(e => s.addEventListener(e, this.eventHandler, this.props.useCapture)));
     }
 
     componentWillUnmount() {
         const events = this.props.events.map(o => o["event"]);
-        this.getSources().forEach(s => events.forEach(e => s.removeDataikuFilterListener(e, this.eventHandler, this.props.useCapture)));
+        this.getSources().forEach(s => events.forEach(e => s.removeEventListener(e, this.eventHandler, this.props.useCapture)));
     }
 
     render() {
@@ -47,7 +47,7 @@ export default class DataikuFilterListener extends Component {
 };
 
 DataikuFilterListener.defaultProps = {
-    events: [{"event": "message", "props": ["k"]}],
+    events: [{"event": "message", "props": ["data"]}],
     event: {},
     n_events: 0,
     logging: false,
