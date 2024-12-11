@@ -1,22 +1,30 @@
-import dataiku_filter_listener
-from dash import Dash, callback, html, Input, Output
+from dataiku_filter_listener import DataikuFilterListener
+from dash_extensions.enrich import DashProxy, html, Input, Output, State
+from dash.exceptions import PreventUpdate
 
-app = Dash(__name__)
+app = DashProxy()
 
 app.layout = html.Div([
-    dataiku_filter_listener.DataikuFilterListener(
-        id='input',
-        value='my-value',
-        label='my-label'
+    DataikuFilterListener(
+        logging=True,
+        id="el" # "el" stands for event listener
     ),
-    html.Div(id='output')
+    html.Div(id="log", children="init")
 ])
 
+@app.callback(
+    Output("log", "children"),
+    Input("el", "n_events"), # the number of events fired
+    State("el", "event"), # the last event fired
+    prevent_initial_call=True)
+def message_event(n_events, event):
+    if event is None:
+        raise PreventUpdate()
+    elif "data" in event:
+        data = event["data"]
+        if (data and "k" in data):
+            print("Caught event! value is " + data["k"])
+    return "callback"
 
-@callback(Output('output', 'children'), Input('input', 'value'))
-def display_output(value):
-    return 'You have entered {}'.format(value)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run_server(debug=True, host="0.0.0.0", port=8050)
