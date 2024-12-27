@@ -10,9 +10,8 @@ The DataikuFilterListener component listens for events from the document object 
 }
 
 \usage{
-dataikuFilterListener(children=NULL, id=NULL, className=NULL, event=NULL,
-events=NULL, logging=NULL, n_events=NULL, style=NULL,
-useCapture=NULL)
+dataikuFilterListener(children=NULL, id=NULL, className=NULL, events=NULL,
+filters=NULL, logging=NULL, style=NULL, useCapture=NULL)
 }
 
 \arguments{
@@ -23,17 +22,15 @@ useCapture=NULL)
 
 \item{className}{Character. A custom class name.}
 
-\item{event}{Named list. The latest event fired.}
-
 \item{events}{List of lists containing elements 'event', 'props'.
 those elements have the following types:
   - event (character; optional)
   - props (list of characters; optional)s. The event entry specifies which event to listen to, e.g. "click" for click events. The "props" entry specifies
      what event properties to record, e.g. ["x", "y"] to get the cursor position.}
 
-\item{logging}{Logical. If true, event information is logged to the javascript console. Useful if you can't remember events props.}
+\item{filters}{Unnamed list. Values from the latest event fired by the Dataiku Dashboard Filters.}
 
-\item{n_events}{Numeric. The number of events fired.}
+\item{logging}{Logical. If true, event information is logged to the javascript console. Useful if you can't remember events props.}
 
 \item{style}{Named list. The CSS style of the component.}
 

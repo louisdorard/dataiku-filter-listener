@@ -21,10 +21,7 @@ Keyword arguments:
 - className (string; optional):
     A custom class name.
 
-- event (dict; optional):
-    The latest event fired.
-
-- events (list of dicts; default [{"event": "message", "props": ["data"]}]):
+- events (list of dicts; default [{ "event": "message", "props": ["data"] }]):
     The event entry specifies which event to listen to, e.g. \"click\"
     for click events. The \"props\" entry specifies      what event
     properties to record, e.g. [\"x\", \"y\"] to get the cursor
@@ -36,12 +33,13 @@ Keyword arguments:
 
     - props (list of strings; optional)
 
+- filters (list; optional):
+    Values from the latest event fired by the Dataiku Dashboard
+    Filters.
+
 - logging (boolean; default False):
     If True, event information is logged to the javascript console.
     Useful if you can't remember events props.
-
-- n_events (number; default 0):
-    The number of events fired.
 
 - style (dict; optional):
     The CSS style of the component.
@@ -53,10 +51,10 @@ Keyword arguments:
     _namespace = 'dataiku_filter_listener'
     _type = 'DataikuFilterListener'
     @_explicitize_args
-    def __init__(self, children=None, id=Component.UNDEFINED, events=Component.UNDEFINED, logging=Component.UNDEFINED, style=Component.UNDEFINED, className=Component.UNDEFINED, event=Component.UNDEFINED, n_events=Component.UNDEFINED, useCapture=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['children', 'id', 'className', 'event', 'events', 'logging', 'n_events', 'style', 'useCapture']
+    def __init__(self, children=None, id=Component.UNDEFINED, events=Component.UNDEFINED, logging=Component.UNDEFINED, style=Component.UNDEFINED, className=Component.UNDEFINED, filters=Component.UNDEFINED, useCapture=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['children', 'id', 'className', 'events', 'filters', 'logging', 'style', 'useCapture']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['children', 'id', 'className', 'event', 'events', 'logging', 'n_events', 'style', 'useCapture']
+        self.available_properties = ['children', 'id', 'className', 'events', 'filters', 'logging', 'style', 'useCapture']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

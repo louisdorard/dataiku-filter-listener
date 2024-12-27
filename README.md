@@ -5,8 +5,8 @@ Dataiku Filter Listener is a Dash component library. The component listens for e
 Get started with a GitHub Codespace (the configuration can be found in `.devcontainer/`).
 1. Run `python usage.py`
 2. When prompted, open the Dash app in a new browser tab.
-3. From this tab, open the browser console and execute `window.postMessage({k: 'titi'}, '*');`.
-4. Go back to the Codespace terminal. The Dash app logs will show "Caught event! value is titi".
+3. From this tab, open the browser console and execute `window.postMessage({type: 'filters', filters: [{'name': 'titi'}]}, '*');`.
+4. Go back to the Codespace terminal. The Dash app logs will show the filters value set above.
 
 If using a different environment, make sure to install Dash and its dependencies as a first step, and visit http://localhost:8050 in your web browser when testing.
 

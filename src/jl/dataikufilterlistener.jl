@@ -15,19 +15,18 @@ Keyword arguments:
      components. If no children are specified, the component will listen for events from the document object.
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
 - `className` (String; optional): A custom class name.
-- `event` (Dict; optional): The latest event fired.
 - `events` (optional): The event entry specifies which event to listen to, e.g. "click" for click events. The "props" entry specifies
      what event properties to record, e.g. ["x", "y"] to get the cursor position.. events has the following type: Array of lists containing elements 'event', 'props'.
 Those elements have the following types:
   - `event` (String; optional)
   - `props` (Array of Strings; optional)s
+- `filters` (Array; optional): Values from the latest event fired by the Dataiku Dashboard Filters.
 - `logging` (Bool; optional): If true, event information is logged to the javascript console. Useful if you can't remember events props.
-- `n_events` (Real; optional): The number of events fired.
 - `style` (Dict; optional): The CSS style of the component.
 - `useCapture` (Bool; optional): Value of useCapture used when registering event listeners.
 """
 function dataikufilterlistener(; kwargs...)
-        available_props = Symbol[:children, :id, :className, :event, :events, :logging, :n_events, :style, :useCapture]
+        available_props = Symbol[:children, :id, :className, :events, :filters, :logging, :style, :useCapture]
         wild_props = Symbol[]
         return Component("dataikufilterlistener", "DataikuFilterListener", "dataiku_filter_listener", available_props, wild_props; kwargs...)
 end

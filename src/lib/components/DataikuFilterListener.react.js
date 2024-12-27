@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {getDescendantProp} from 'dash-extensions-js'
+import { getDescendantProp } from 'dash-extensions-js'
 
 /**
  * The DataikuFilterListener component listens for events from the document object or children if provided.
@@ -14,19 +14,22 @@ export default class DataikuFilterListener extends Component {
         this.getSources = this.getSources.bind(this);
     }
 
-    getSources(){
+    getSources() {
         return [window];
     }
 
     eventHandler(e) {
-        if(this.props.logging){
+        if (this.props.logging) {
             console.log(e);
         }
-        const eventProps = this.props.events.filter(o => o["event"] === e.type).map(o => o["props"]? o["props"] : [])[0];
-        const eventData = eventProps.reduce(function(o, k) { o[k] = getDescendantProp(e, k); return o; }, {});
-//        eventData.id = e.srcElement.id;
-        this.props.setProps({n_events: this.props.n_events + 1});
-        this.props.setProps({event: eventData});
+        const eventProps = this.props.events.filter(o => o["event"] === e.type).map(o => o["props"] ? o["props"] : [])[0];
+        const eventData = eventProps.reduce(function (o, k) { o[k] = getDescendantProp(e, k); return o; }, {});
+        //        eventData.id = e.srcElement.id;
+        let filters = [];
+        if (eventData.data && eventData.data.type && eventData.data.type === 'filters' && eventData.data.filters) {
+            filters = eventData.data.filters;
+        }
+        this.props.setProps({ filters: filters });
     }
 
     componentDidMount() {
@@ -41,15 +44,14 @@ export default class DataikuFilterListener extends Component {
 
     render() {
         return <div className={this.props.className} style={this.props.style} ref={this.myRef}>
-                    {this.props.children}
-               </div>;
+            {this.props.children}
+        </div>;
     }
 };
 
 DataikuFilterListener.defaultProps = {
-    events: [{"event": "message", "props": ["data"]}],
-    event: {},
-    n_events: 0,
+    events: [{ "event": "message", "props": ["data"] }],
+    filters: {},
     logging: false,
     useCapture: false
 };
@@ -97,14 +99,9 @@ DataikuFilterListener.propTypes = {
     setProps: PropTypes.func,
 
     /**
-     * The latest event fired.
+     * Values from the latest event fired by the Dataiku Dashboard Filters.
      */
-    event: PropTypes.object,
-
-    /**
-     * The number of events fired.
-     */
-    n_events: PropTypes.number,
+    filters: PropTypes.array,
 
     /**
      * Value of useCapture used when registering event listeners.
