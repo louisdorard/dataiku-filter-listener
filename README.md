@@ -7,6 +7,11 @@ Test from the `dataiku_filter_listener/` directory with `python usage.py`.
 - From this tab, open the browser console and execute `window.postMessage({k: 'titi'}, '*');`.
 - Go back to the Codespace terminal. The Dash app logs will show "Caught event! value is titi".
 
+## Motivation for this component
+
+We want to catch events triggered by Dataiku Dashboard Filters. As explained in the Dataiku documentation (Dashboards » Insights reference » Webapp » [Accessing dashboard filters](https://doc.dataiku.com/dss/latest/dashboards/insights/webapp.html#accessing-dashboard-filters), the Filters post events of type 'message' to the browser `window`. The message event's data contains a `type` property set to 'filters', and a `filters` property containing the actual filter values. We want to access these values from Dash code.
+
+The Dash Extensions library contains an EventListener class (see link below) but it can't be used because it doesn't listen to events at the window level.
 
 ## How the component was built
 
