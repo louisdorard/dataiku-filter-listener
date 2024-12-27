@@ -1,4 +1,14 @@
 {
     "image":"mcr.microsoft.com/devcontainers/universal:2",
-    "postCreateCommand": "pip3 install --user -r requirements-cookiecutter.txt"
+    "postCreateCommand": "pip3 install --user -r requirements.txt && npm install",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "esbenp.prettier-vscode",
+                "github.copilot",
+                "github.copilot-chat"
+            ]
+        }
+    }
 }
