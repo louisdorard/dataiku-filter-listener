@@ -6,15 +6,35 @@ Get started with a GitHub Codespace (the configuration can be found in `.devcont
 1. Run `python usage.py`
 2. When prompted, open the Dash app in a new browser tab.
 3. From this tab, open the browser console and execute `window.postMessage({type: 'filters', filters: [{'name': 'titi'}]}, '*');`.
-4. Go back to the Codespace terminal. The Dash app logs will show the filters value set above.
+4. Back in the Codespace terminal, the Dash app logs should show the filters value set above.
 
 If using a different environment, make sure to install Dash and its dependencies as a first step, and visit http://localhost:8050 in your web browser when testing.
 
-## Motivation
+## What happens under the hood
+
+The Dash component executes something similar to the following Javascript code in order to listen for events of type ‘message’ and to get filter values from the events data:
+
+```js
+window.addEventListener('message', function(event) {
+  let filters = [];
+    if (event.data && event.data.type && event.data.type === 'filters' && event.data.filters) {
+        filters = event.data.filters;
+        console.log(filters);
+    }
+});
+```
+
+Learn more about triggering and listening to message events:
+
+* [postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
+* [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+
+
+## Why this component?
 
 We want to catch events triggered by Dataiku Dashboard Filters and access filter values from Dash code. As explained in the Dataiku documentation (Dashboards » Insights reference » Webapp » [Accessing dashboard filters](https://doc.dataiku.com/dss/latest/dashboards/insights/webapp.html#accessing-dashboard-filters), the Filters post events of type 'message' to the browser `window`. The message event's data contains a `type` property set to 'filters', and a `filters` property containing the actual filter values.
 
-The Dash Extensions library contains an EventListener class (see link in the next section) but it can't be used because it doesn't listen to events at the window level.
+The Dash Extensions library contains an EventListener class (see link in the next section) but it can't be used because it doesn't listen to events at the window level (see [line 20](https://github.com/emilhe/dash-extensions/blob/57c350d861ed484c6210faefcf51d0ff99ee304d/src/lib/components/EventListener.react.js#L20): "if no children are provided, attach to the document object").
 
 ## How the component was built
 
