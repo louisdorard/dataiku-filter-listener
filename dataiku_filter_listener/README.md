@@ -1,15 +1,41 @@
 # Dataiku Filter Listener
 
-Dataiku Filter Listener is a Dash component library.
+Dataiku Filter Listener is a Dash component library. The component listens for events triggered by Dataiku Dashboard Filters and gets filter values.
 
-Listen for events triggered by Dataiku Dashboard Filters and get filter values
+Get started with a GitHub Codespace (the configuration can be found in `.devcontainer/`).
+1. Run `python usage.py`
+2. When prompted, open the Dash app in a new browser tab.
+3. From this tab, open the browser console and execute `window.postMessage({k: 'titi'}, '*');`.
+4. Go back to the Codespace terminal. The Dash app logs will show "Caught event! value is titi".
 
-Get started with:
-1. Install Dash and its dependencies: https://dash.plotly.com/installation
-2. Run `python usage.py`
-3. Visit http://localhost:8050 in your web browser
+If using a different environment, make sure to install Dash and its dependencies as a first step, and visit http://localhost:8050 in your web browser when testing.
+
+## Motivation
+
+We want to catch events triggered by Dataiku Dashboard Filters and access filter values from Dash code. As explained in the Dataiku documentation (Dashboards » Insights reference » Webapp » [Accessing dashboard filters](https://doc.dataiku.com/dss/latest/dashboards/insights/webapp.html#accessing-dashboard-filters), the Filters post events of type 'message' to the browser `window`. The message event's data contains a `type` property set to 'filters', and a `filters` property containing the actual filter values.
+
+The Dash Extensions library contains an EventListener class (see link in the next section) but it can't be used because it doesn't listen to events at the window level.
+
+## How the component was built
+
+```bash
+cookiecutter gh:plotly/dash-component-boilerplate
+cd dataiku_filter_listener/
+npm install
+npm run build
+python usage.py
+```
+
+From the `dataiku_filter_listener/` directory:
+
+* Added `dash-extensions-js` dependency to package.json
+* Installed npm packages with `npm install`
+* Wrote DataikuFilterListener.react.js by adapting Dash Extensions' [EventListener.react.js](https://github.com/emilhe/dash-extensions/blob/57c350d861ed484c6210faefcf51d0ff99ee304d/src/lib/components/EventListener.react.js#L8)
+* Built with `npm run build`
 
 ## Contributing
+
+This section was automatically generated when creating the component.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
