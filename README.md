@@ -1,18 +1,37 @@
 # Dataiku Filter Listener
 
-Dataiku Filter Listener is a Dash component library. The component listens for events triggered by Dataiku Dashboard Filters and gets filter values.
+`DataikuFilterListener` is a Dash component library. The component listens for events triggered by Dataiku Dashboard Filters and gets filter values (available since Dataiku 13.0). Review [`usage.py`](usage.py) to understand how to use it in a Dash app.
 
-Get started with a GitHub Codespace (the configuration can be found in `.devcontainer/`).
-1. Run `python usage.py`
-2. When prompted, open the Dash app in a new browser tab.
-3. From this tab, open the browser console and execute `window.postMessage({type: 'filters', filters: [{'name': 'titi'}]}, '*');`.
-4. Back in the Codespace terminal, the Dash app logs should show the filters value set above.
+How to test:
 
-If using a different environment, make sure to install Dash and its dependencies as a first step, and visit http://localhost:8050 in your web browser when testing.
+* GitHub Codespaces:
+  * Start the Dash webapp: run `python usage.py` in the terminal. (The Python environment was built from `requirements.txt` as specified in the Codespace configuration in `.devcontainer/`.)
+  * When prompted by the Codespace, open the webapp in a new browser tab.
+  * Simulate events triggered by Dataiku Dashboard Filters: open the browser console and execute `window.postMessage({type: 'filters', filters: [{'name': 'titi'}]}, '*');`.
+  * The filters value set above should now be shown in the webapp.
+* Your local development environment:
+  * Install Dash and its dependencies in your Python environment.
+  * Clone this repository.
+  * Follow the steps above and visit http://localhost:8050 in your web browser when testing.
+* Dataiku:
+  * Create a new code environment with the following libraries, or add them to an existing code env:
+  ```
+  dash
+  dash_extensions
+  git+https://github.com/louisdorard/dataiku-filter-listener.git
+  ```
+  * Create a new Dash webapp:
+    * Paste code from `usage.py`.
+    * Make sure to use the code env defined previously.
+    * Start the webapp.
+  * Create a new Dashboard:
+    * Define Filters.
+    * Embed the Dash webapp.
+  * View the Dashboard and play with the Filters: the values you set should be shown in the webapp.
 
 ## What happens under the hood
 
-The Dash component executes something similar to the following Javascript code in order to listen for events of type ‘message’ and to get filter values from the events data:
+The Dash component executes something similar to the following Javascript code in order to listen to events of type ‘message’ and to get filter values from the events data:
 
 ```js
 window.addEventListener('message', function(event) {
@@ -29,12 +48,11 @@ Learn more about triggering and listening to message events:
 * [postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
 * [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 
-
 ## Why this component?
 
-We want to catch events triggered by Dataiku Dashboard Filters and access filter values from Dash code. As explained in the Dataiku documentation (Dashboards » Insights reference » Webapp » [Accessing dashboard filters](https://doc.dataiku.com/dss/latest/dashboards/insights/webapp.html#accessing-dashboard-filters), the Filters post events of type 'message' to the browser `window`. The message event's data contains a `type` property set to 'filters', and a `filters` property containing the actual filter values.
+We want to catch events triggered by Dataiku Dashboard Filters and access filter values from Dash code. As explained in the Dataiku documentation (Dashboards » Insights reference » Webapp » [Accessing dashboard filters](https://doc.dataiku.com/dss/latest/dashboards/insights/webapp.html#accessing-dashboard-filters)), the Filters post events of type 'message' to the browser `window`. The message event's data contains a `type` property set to 'filters', and a `filters` property containing the actual filter values.
 
-The Dash Extensions library contains an EventListener class (see link in the next section) but it can't be used because it doesn't listen to events at the window level (see [line 20](https://github.com/emilhe/dash-extensions/blob/57c350d861ed484c6210faefcf51d0ff99ee304d/src/lib/components/EventListener.react.js#L20): "if no children are provided, attach to the document object").
+The popular [Dash Extensions](https://www.dash-extensions.com/) library contains an EventListener class but it can't be used because it doesn't listen to events at the window level (see [line 20](https://github.com/emilhe/dash-extensions/blob/57c350d861ed484c6210faefcf51d0ff99ee304d/src/lib/components/EventListener.react.js#L20): "if no children are provided, attach to the document object").
 
 ## How the component was built
 
