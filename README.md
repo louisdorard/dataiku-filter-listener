@@ -68,7 +68,9 @@ From the `dataiku_filter_listener/` directory:
 
 * Added `dash-extensions-js` dependency to package.json
 * Installed npm packages with `npm install`
-* Wrote DataikuFilterListener.react.js by adapting Dash Extensions' [EventListener.react.js](https://github.com/emilhe/dash-extensions/blob/57c350d861ed484c6210faefcf51d0ff99ee304d/src/lib/components/EventListener.react.js#L8)
+* Wrote DataikuFilterListener.react.js by adapting Dash Extensions' [EventListener.react.js](https://github.com/emilhe/dash-extensions/blob/57c350d861ed484c6210faefcf51d0ff99ee304d/src/lib/components/EventListener.react.js#L8):
+ * Simplified `getSource()`: this would always be the `window`.
+ * Added code in `eventHandler()` to get the filter values from the message event.
 * Built with `npm run build`
 
 ## Contributing
