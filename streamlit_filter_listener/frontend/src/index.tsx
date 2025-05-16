@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import FilterListener from "./StreamlitFilterListener";
+import FilterListener from "./StreamlitFilterListener.tsx";
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
