@@ -1,37 +1,52 @@
 # Dataiku Filter Listener
 
-`DataikuFilterListener` is a Dash component library. The component listens for events triggered by Dataiku Dashboard Filters and gets filter values (available since Dataiku 13.0). Review [`usage.py`](usage.py) to understand how to use it in a Dash app.
+`DataikuFilterListener` is a Dash component library. The component listens for events triggered by Dataiku Dashboard Filters and gets filter values (available since Dataiku 13.0).
 
-How to test:
+## Usage
 
-* GitHub Codespaces:
-  * Start the Dash webapp: run `python usage.py` in the terminal. (The Python environment was built from `requirements.txt` as specified in the Codespace configuration in `.devcontainer/`.)
-  * When prompted by the Codespace, open the webapp in a new browser tab.
-  * Simulate events triggered by Dataiku Dashboard Filters: open the browser console and execute `window.postMessage({type: 'filters', filters: [{'name': 'titi'}]}, '*');`.
-  * The filters value set above should now be shown in the webapp.
-* Your local development environment:
-  * Install Dash and its dependencies in your Python environment.
-  * Clone this repository.
-  * Follow the steps above and visit http://localhost:8050 in your web browser when testing.
-* Dataiku:
-  * Create a new code environment with the following libraries, or add them to an existing code env:
-  ```
-  dash
-  dash_extensions
-  git+https://github.com/louisdorard/dataiku-filter-listener.git
-  ```
-  * Create a new Dash webapp:
-    * Paste code from `usage.py`.
-    * Make sure to use the code env defined previously.
-    * Start the webapp.
-  * Create a new Dashboard:
-    * Define Filters.
-    * Embed the Dash webapp.
-  * View the Dashboard and play with the Filters: the values you set should be shown in the webapp.
+* In your Dataiku instance, create a new Python code environment with the following requirements, or add them to an existing environment:
+```
+dash
+dash_extensions
+git+https://github.com/louisdorard/dataiku-filter-listener.git
+```
+* Create a new Dash webapp:
+  * Paste code from [`usage.py`](usage.py).
+  * Make sure to use the code env defined previously.
+  * Start the webapp.
+* Create a new Dashboard:
+  * Define Filters.
+  * Embed the Dash webapp.
+* View the Dashboard and play with the Filters: the values you set should impact the webapp.
+
+## Testing outside of Dataiku
+
+It can be useful to test this component outside of Dataiku, for troubleshooting or debugging purposes.
+
+* Start the Dash webapp
+* Simulate events triggered by Dataiku Dashboard Filters:
+  * Open the browser console.
+  * Execute `window.postMessage({type: 'filters', filters: [{'name': 'titi'}]}, '*');`.
+  * Confirm its impact on the Dash webapp. For instance, when running `usage.py`, we would expect to see the `filters` value set above, both in the webapp interface and in its logs.
+
+### Starting the Dash webapp
+
+GitHub Codespaces provides a quick way to set up a cloud environment to start Dash webapps:
+
+* From this repository's home page, click on **Code** > **Codespaces** > **Create codespace on main**. The Codespace will be equipped with a Python environment built from [`requirements.txt`](requirements.txt), as specified in the Codespace configuration in [`.devcontainer/`](.devcontainer).
+* Run `python usage.py` in the terminal (replace with the filename that contains your webapp's code, if different).
+* When prompted by the Codespace, open the webapp in a new browser tab.
+
+Alternatively, you can do this locally:
+
+* Install the Python requirements listed in the [Usage](#usage) section.
+* Clone this repository.
+* Run `python usage.py` in the terminal.
+* Open [http://localhost:8050](http://localhost:8050) in your web browser.
 
 ## What happens under the hood
 
-The Dash component executes something similar to the following Javascript code in order to listen to events of type ‘message’ and to get filter values from the events data:
+The Dash component executes something similar to the following JavaScript code in order to listen to events of type ‘message’ and to get filter values from the event's data:
 
 ```js
 window.addEventListener('message', function(event) {
